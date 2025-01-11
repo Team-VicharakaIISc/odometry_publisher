@@ -11,7 +11,7 @@ using namespace std::chrono_literals;
 class OdometryPublisher : public rclcpp::Node {
 public:
     OdometryPublisher()
-        : Node("odometry_publisher"), x_(0.0), y_(0.0), th_(0.0), ticks_per_meter_(1000.0), wheel_base_(0.5), last_left_ticks_(0), last_right_ticks_(0) {
+        : Node("odometry_publisher"), x_(0.0), y_(0.0), th_(0.0), ticks_per_meter_(357.6304), wheel_base_(0.22), last_left_ticks_(0), last_right_ticks_(0) {
 
         odom_pub_ = this->create_publisher<nav_msgs::msg::Odometry>("/demo/odom", 10);
         tf_broadcaster_ = std::make_shared<tf2_ros::TransformBroadcaster>(this);
