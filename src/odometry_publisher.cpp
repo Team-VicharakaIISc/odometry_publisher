@@ -13,7 +13,7 @@ public:
     OdometryPublisher()
         : Node("odometry_publisher"), x_(0.0), y_(0.0), th_(0.0), ticks_per_meter_(4900), wheel_base_(0.72) {
 
-        odom_pub_ = this->create_publisher<nav_msgs::msg::Odometry>("/odom", 10);
+        odom_pub_ = this->create_publisher<nav_msgs::msg::Odometry>("/wheel_odom", 10);
         tf_broadcaster_ = std::make_shared<tf2_ros::TransformBroadcaster>(this);
 
         encoder_sub_ = this->create_subscription<std_msgs::msg::Int32MultiArray>(
@@ -36,8 +36,8 @@ private:
         if (dt == 0) return;
 
         std::vector<int> current_ticks = msg->data;
-        double right_distance = ((current_ticks[0] - last_ticks_[0]) + (current_ticks[2] - last_ticks_[2]) ) / (2.0 * ticks_per_meter_);
-        double left_distance = ((current_ticks[1] - last_ticks_[1]) + (current_ticks[3] - last_ticks_[3])  )/ (2.0 * ticks_per_meter_);
+        double right_distance = ((current_ticks[1] - last_ticks_[1])) / (1.0 * ticks_per_meter_);
+        double left_distance = ((current_ticks[3] - last_ticks_[3]) + (current_ticks[4] - last_ticks_[4]) +(current_ticks[5] - last_ticks_[5])  )/ (3.0 * ticks_per_meter_);
 
         last_ticks_ = current_ticks;
         
