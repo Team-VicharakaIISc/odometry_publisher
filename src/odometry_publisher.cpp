@@ -36,8 +36,8 @@ private:
         if (dt == 0) return;
 
         std::vector<int> current_ticks = msg->data;
-        double right_distance = ((current_ticks[1] - last_ticks_[1])) / (1.0 * ticks_per_meter_);
-        double left_distance = ((current_ticks[3] - last_ticks_[3]) + (current_ticks[4] - last_ticks_[4]) +(current_ticks[5] - last_ticks_[5])  )/ (3.0 * ticks_per_meter_);
+        double right_distance = ((current_ticks[1] - last_ticks_[1])) / (1.0 * 5616);
+        double left_distance = ((current_ticks[4] - last_ticks_[4]))/ (1.0 * 5600) ;
 
         last_ticks_ = current_ticks;
         
@@ -62,7 +62,7 @@ private:
         geometry_msgs::msg::TransformStamped odom_trans;
         odom_trans.header.stamp = current_time;
         odom_trans.header.frame_id = "odom";
-        odom_trans.child_frame_id = "base_link";
+        odom_trans.child_frame_id = "base_footprint";
         odom_trans.transform.translation.x = x_;
         odom_trans.transform.translation.y = y_;
         odom_trans.transform.translation.z = 0.0;
@@ -76,7 +76,7 @@ private:
         odom.pose.pose.position.y = y_;
         odom.pose.pose.position.z = 0.0;
         odom.pose.pose.orientation = odom_quat;
-        odom.child_frame_id = "base_link";
+        odom.child_frame_id = "base_footprint";
         odom.twist.twist.linear.x = linear_velocity;
         odom.twist.twist.angular.z = angular_velocity;
         odom_pub_->publish(odom);
